@@ -8,7 +8,9 @@ let svg = d3.select('.chart').append('svg')
     .append('g')
     .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
+    
 d3.csv('driving.csv', d3.autoType).then(data=>{ 
+
 
 const xAxis = d3.scaleLinear()
     .range([0,width])
