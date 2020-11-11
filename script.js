@@ -1,4 +1,4 @@
-const margin = {top:50, left:100, bottom:80, right:50};
+const margin = {top:50, left: 100, bottom: 75, right:50};
 const width = 700-margin.left- margin.right;
 const height = 600-margin.top- margin.bottom;
 
@@ -15,7 +15,7 @@ const xAxis = d3.scaleLinear()
     .domain(d3.extent(data, d=>d.miles)).nice()
 
 const Maxis = d3.axisBottom()
-    .ticks(7, 's')
+    .ticks(6, 's')
     .scale(xAxis)
     .tickFormat(function(d) {
         return d3.format(',')(d)
@@ -23,7 +23,7 @@ const Maxis = d3.axisBottom()
 
 let X = svg.append('g')
     .attr('class', 'axis x-axis')
-    .attr("transform", `translate(0, ${height - margin.bottom})`)
+    .attr("transform", `translate(0, ${height})`)
     .call(Maxis);
 
 X.select('.domain').remove()
@@ -34,7 +34,7 @@ const yAxis = d3.scaleLinear()
     .domain(d3.extent(data, d=>d.gas)).nice()
  
 const Gaxis = d3.axisLeft()
-    .ticks(9, 's')
+    .ticks(8, 's')
     .scale(yAxis)
     .tickFormat(function(d) {
         return '$' + d3.format('.2f')(d)
@@ -42,29 +42,26 @@ const Gaxis = d3.axisLeft()
 
 let Y = svg.append('g')
     .attr('class', 'axis y-axis')
-    .attr("transform", `translate(${margin.left}, 0)`)
     .call(Gaxis);
 
 Y.select('.domain').remove()
 
 
 svg.append('text')
-    .attr('x', width - margin.left - margin.right)
-    .attr('y', height - margin.top - margin.bottom + 150)
+    .attr('x', width - margin.left - margin.right - 5)
+    .attr('y', height - margin.top - margin.bottom + 175)
     .text("Miles per Person per Year")
     .attr('font-weight', 'bold')
     .attr('font-size', 12)
-    .call(halo)
 
 svg.append('text')
-    .attr('x', width - margin.left - margin.right - 410)
+    .attr('x', width - margin.left - margin.right - 415)
     .attr('y', height - 400)
     .attr('text-anchor', 'font')
     .text("Cost per Gallon")
     .attr("transform", d => "rotate(90)")
     .attr('font-size', 12)
     .attr('font-weight', 'bold')
-    .call(halo)
 
 
 const line = d3.line()
@@ -90,6 +87,7 @@ let dot = svg.append('g')
     .enter()
     .append('g')
 
+    
 dot.append('circle')
     .attr('class', 'dot')
     .attr('cx', function (d) { 
